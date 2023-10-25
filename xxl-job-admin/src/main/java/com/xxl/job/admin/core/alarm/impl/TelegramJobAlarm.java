@@ -40,12 +40,12 @@ public class TelegramJobAlarm implements JobAlarm {
 
     private String getSendText(XxlJobLog jobLog) {
         // alarmContent
-        String alarmContent = "Alarm Job LogId=" + jobLog.getId();
+        String alarmContent = "Job Handler=" + jobLog.getExecutorHandler();
         if (jobLog.getTriggerCode() != ReturnT.SUCCESS_CODE) {
-            alarmContent += "<br>TriggerMsg=<br>" + jobLog.getTriggerMsg();
+            alarmContent += "<br/>TriggerMsg=<br/>" + jobLog.getTriggerMsg();
         }
         if (jobLog.getHandleCode()>0 && jobLog.getHandleCode() != ReturnT.SUCCESS_CODE) {
-            alarmContent += "<br>HandleCode=" + jobLog.getHandleMsg();
+            alarmContent += "<br/>HandleCode=" + jobLog.getHandleMsg();
         }
         return alarmContent ;
     }
@@ -65,6 +65,7 @@ public class TelegramJobAlarm implements JobAlarm {
         HashMap<String, String> params = new HashMap<>();
         params.put("chat_id",chatId);
         params.put("text",text);
+        // params.put("parse_mode","MarkdownV2");
         String data = JacksonUtil.writeValueAsString(params);
 
         // 发送请求
